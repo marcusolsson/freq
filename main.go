@@ -23,6 +23,7 @@ Options:
   --desc                Sort buckets in descending order (default is false).
   --justify             Aligns categories and ranges to the right.
   --column-width=<num>  Width of the largest bin (default is 30).
+  --buckets=<num>       Number of histogram buckets (default is 10).
 `
 
 func main() {
@@ -33,6 +34,7 @@ func main() {
 		columnWidth = flag.Float64P("column-width", "", 30, "")
 		desc        = flag.BoolP("desc", "", false, "")
 		justify     = flag.BoolP("justify", "", false, "")
+		buckets     = flag.IntP("buckets", "", 10, "")
 	)
 
 	flag.Usage = func() {
@@ -65,7 +67,7 @@ func main() {
 			samples = append(samples, f)
 		}
 
-		buckets, edges := bucketizeQuantities(samples, 10)
+		buckets, edges := bucketizeQuantities(samples, *buckets)
 
 		printHistogram(os.Stdout, buckets, edges, *columnWidth, *justify)
 
