@@ -2,6 +2,31 @@
 
 Command-line utility application for displaying frequencies as histograms or bar charts, from the standard input.
 
+For text input, `freq` returns a bar chart:
+
+```shell
+$ cat file.txt | freq
+bar  ██████████ 1
+foo  ████████████████████ 2
+test ██████████████████████████████ 3
+```
+
+For numerical datasets, add the `--histogram` option to display a frequency distribution:
+
+```shell
+$ cat dataset.txt | freq --histogram --justify
+  [2.0, 3.0] ████ 28
+  [3.0, 4.0] █████████████████████████████ 167
+  [4.0, 5.0] ██████████████████████████████ 170
+  [5.0, 6.0] ████████████████████████████ 161
+  [6.0, 7.0] ████████████ 73
+  [7.0, 8.0] ██████████ 59
+  [8.0, 9.0] █████████ 52
+ [9.0, 10.0] ████ 26
+[10.0, 11.0] ███ 17
+[11.0, 12.0] ██ 15
+```
+
 ## Installation
 
 ```bash
