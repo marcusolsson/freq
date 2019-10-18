@@ -50,5 +50,5 @@ cat file.txt | tr -d '[:punct:]' | tr '[:upper:]' '[:lower:]' | tr '[:space:]' '
 Show distribution of word lengths in a document:
 
 ```bash
-cat file.txt |tr -d '[:punct:]' | tr '[:upper:]' '[:lower:]' | tr '[:space:]' '\n' | xargs -I'%' -n1 sh -c "echo % | wc -m" | freq --histogram
+cat file.txt | tr -d '[:punct:]' | tr '[:upper:]' '[:lower:]' | tr '[:space:]' '\n' | xargs -I'%' -n1 sh -c "echo % | wc -m" | freq --histogram
 ```
