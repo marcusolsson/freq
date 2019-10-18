@@ -47,8 +47,8 @@ Show most frequently used words in a document:
 cat file.txt | tr -d '[:punct:]' | tr '[:upper:]' '[:lower:]' | tr '[:space:]' '\n' | freq
 ```
 
-Show distribution of word length in a document:
+Show distribution of word lengths in a document:
 
 ```bash
-cat file.txt |tr -d '[:punct:]' | tr '[:upper:]' '[:lower:]' | tr '[:space:]' '\n' | xargs -I'%' -n1 sh -c "echo % | wc -m" | freq -i
+cat file.txt |tr -d '[:punct:]' | tr '[:upper:]' '[:lower:]' | tr '[:space:]' '\n' | xargs -I'%' -n1 sh -c "echo % | wc -m" | freq --histogram
 ```
