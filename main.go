@@ -160,12 +160,12 @@ func printSummary(out io.Writer, numbers []float64) {
 	fmt.Fprintln(out, " "+strings.Join(stats, ", "))
 }
 
-var boxes = []string{" ", "▏", "▎", "▍", "▌", "▋", "▊", "▉", "█"}
+var boxes = []string{"▏", "▎", "▍", "▌", "▋", "▊", "▉", "█"}
 
 // columns returns a horizontal bar of a given size.
 func column(size float64) string {
 	if size <= 0 {
-		return " "
+		return boxes[0]
 	}
 
 	var (
