@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"bytes"
 	"fmt"
 	"io"
 	"os"
@@ -106,7 +107,7 @@ func printHistogram(out io.Writer, buckets [][]float64, edges []float64, barWidt
 	for idx, bucket := range buckets {
 		var (
 			normalizedWidth = float64(len(bucket)) / maxFreq
-			width           = int(normalizedWidth * barWidth)
+			width           = normalizedWidth * barWidth
 			prefix          = paddedString(labels[idx], labelWidth, justify)
 		)
 
@@ -125,7 +126,7 @@ func printBarChart(out io.Writer, buckets []bucket, barWidth float64, justify bo
 	for _, bucket := range buckets {
 		var (
 			normalizedWidth = float64(bucket.Frequency) / float64(maxFreq)
-			width           = int(normalizedWidth * barWidth)
+			width           = normalizedWidth * barWidth
 			prefix          = paddedString(bucket.Category, categoryWidth, justify)
 		)
 
@@ -159,13 +160,29 @@ func printSummary(out io.Writer, numbers []float64) {
 	fmt.Fprintln(out, " "+strings.Join(stats, ", "))
 }
 
+var boxes = []string{" ", "▏", "▎", "▍", "▌", "▋", "▊", "▉", "█"}
+
 // columns returns a horizontal bar of a given size.
-func column(size int) string {
-	if size == 0 {
-		return "▏"
+func column(size float64) string {
+	if size <= 0 {
+		return " "
 	}
 
-	return strings.Repeat("█", size)
+	var (
+		wholes   = int(size)
+		fraction = size - float64(wholes)
+	)
+
+	var buf bytes.Buffer
+
+	buf.WriteString(strings.Repeat(boxes[len(boxes)-1], wholes))
+
+	if fraction > 0 {
+		index := int(fraction * float64(len(boxes)))
+		buf.WriteString(boxes[index])
+	}
+
+	return buf.String()
 }
 
 // maxStringWidth returns the width of the widest string in a string slice. It
