@@ -18,9 +18,9 @@ func TestPrintBarChart(t *testing.T) {
 	printBarChart(&buf, h, 3, false)
 
 	want := `
-foobar ███ 3
-世界   ██ 2
-–      █ 1
+foobar ███▏ 3
+世界   ██▏ 2
+–      █▏ 1
 `
 
 	w := strings.TrimLeft(want, "\n")

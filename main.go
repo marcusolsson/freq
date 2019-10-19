@@ -2,9 +2,9 @@ package main
 
 import (
 	"bufio"
-	"bytes"
 	"fmt"
 	"io"
+	"math"
 	"os"
 	"strconv"
 	"strings"
@@ -96,7 +96,7 @@ Options:
 func printHistogram(out io.Writer, buckets [][]float64, edges []float64, barWidth float64, justify bool) {
 	var labels []string
 	for i := 0; i < len(edges)-1; i++ {
-		labels = append(labels, fmt.Sprintf("%.1f-%.1f", edges[i], edges[i+1]))
+		labels = append(labels, fmt.Sprintf("%.4g-%.4g", edges[i], edges[i+1]))
 	}
 
 	var (
@@ -146,13 +146,13 @@ func paddedString(str string, width int, justify bool) string {
 // printSummary displays additional statistics about the dataset.
 func printSummary(out io.Writer, numbers []float64) {
 	stats := []string{
-		fmt.Sprintf("%s=%.0f", "p50", percentile(0.5, numbers)),
-		fmt.Sprintf("%s=%.0f", "p90", percentile(0.9, numbers)),
-		fmt.Sprintf("%s=%.0f", "p95", percentile(0.95, numbers)),
-		fmt.Sprintf("%s=%.0f", "p99", percentile(0.99, numbers)),
-		fmt.Sprintf("%s=%.0f", "min", minFloat64(numbers)),
-		fmt.Sprintf("%s=%.0f", "max", maxFloat64(numbers)),
-		fmt.Sprintf("%s=%.2f", "avg", avgFloat64(numbers)),
+		fmt.Sprintf("%s=%g", "p50", percentile(0.5, numbers)),
+		fmt.Sprintf("%s=%g", "p90", percentile(0.9, numbers)),
+		fmt.Sprintf("%s=%g", "p95", percentile(0.95, numbers)),
+		fmt.Sprintf("%s=%g", "p99", percentile(0.99, numbers)),
+		fmt.Sprintf("%s=%g", "min", minFloat64(numbers)),
+		fmt.Sprintf("%s=%g", "max", maxFloat64(numbers)),
+		fmt.Sprintf("%s=%g", "avg", avgFloat64(numbers)),
 	}
 
 	fmt.Fprintln(out)
@@ -164,25 +164,10 @@ var boxes = []string{"▏", "▎", "▍", "▌", "▋", "▊", "▉", "█"}
 
 // columns returns a horizontal bar of a given size.
 func column(size float64) string {
-	if size <= 0 {
-		return boxes[0]
-	}
+	fraction := size - math.Floor(size)
+	index := int(fraction * float64(len(boxes)))
 
-	var (
-		wholes   = int(size)
-		fraction = size - float64(wholes)
-	)
-
-	var buf bytes.Buffer
-
-	buf.WriteString(strings.Repeat(boxes[len(boxes)-1], wholes))
-
-	if fraction > 0 {
-		index := int(fraction * float64(len(boxes)))
-		buf.WriteString(boxes[index])
-	}
-
-	return buf.String()
+	return strings.Repeat(boxes[len(boxes)-1], int(size)) + boxes[index]
 }
 
 // maxStringWidth returns the width of the widest string in a string slice. It

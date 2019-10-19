@@ -7,7 +7,6 @@ func TestBuildColumn(t *testing.T) {
 		In  float64
 		Out string
 	}{
-		{In: -1.0, Out: "▏"},
 		{In: 0.0, Out: "▏"},
 		{In: 0.1, Out: "▏"},
 		{In: 0.2, Out: "▎"},
@@ -18,8 +17,8 @@ func TestBuildColumn(t *testing.T) {
 		{In: 0.7, Out: "▊"},
 		{In: 0.8, Out: "▉"},
 		{In: 0.9, Out: "█"},
-		{In: 1.0, Out: "█"},
-		{In: 2.0, Out: "██"},
+		{In: 1.0, Out: "█▏"},
+		{In: 2.0, Out: "██▏"},
 		{In: 2.5, Out: "██▋"},
 		{In: 5.3, Out: "█████▍"},
 	} {
