@@ -96,7 +96,7 @@ Options:
 func printHistogram(out io.Writer, buckets [][]float64, edges []float64, barWidth float64, justify bool) {
 	var labels []string
 	for i := 0; i < len(edges)-1; i++ {
-		labels = append(labels, fmt.Sprintf("%.4g-%.4g", edges[i], edges[i+1]))
+		labels = append(labels, fmt.Sprintf("%.6g-%.6g", edges[i], edges[i+1]))
 	}
 
 	var (
