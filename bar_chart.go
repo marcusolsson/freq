@@ -2,28 +2,30 @@ package main
 
 import "sort"
 
-type Bucket struct {
+type bucket struct {
 	Category  string
 	Frequency int
 }
 
-func bucketizeCategories(vals []string) []Bucket {
+func bucketizeCategories(vals []string) []bucket {
 	buckets := make(map[string]int)
+
 	for _, v := range vals {
 		if _, ok := buckets[v]; !ok {
 			buckets[v] = 0
 		}
-		buckets[v] = buckets[v] + 1
+		buckets[v]++
 	}
 
-	var res []Bucket
+	res := make([]bucket, 0, len(buckets))
 	for k, v := range buckets {
-		res = append(res, Bucket{Category: k, Frequency: v})
+		res = append(res, bucket{Category: k, Frequency: v})
 	}
+
 	return res
 }
 
-func sortBuckets(buckets []Bucket, orderBy string, desc bool) {
+func sortBuckets(buckets []bucket, orderBy string, desc bool) {
 	var sorter sort.Interface
 
 	switch orderBy {
@@ -40,14 +42,14 @@ func sortBuckets(buckets []Bucket, orderBy string, desc bool) {
 	sort.Sort(sorter)
 }
 
-type byCategory []Bucket
+type byCategory []bucket
 
-func (a byCategory) Len() int           { return len(a) }
-func (a byCategory) Less(i, j int) bool { return a[i].Category < a[j].Category }
-func (a byCategory) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
+func (b byCategory) Len() int           { return len(b) }
+func (b byCategory) Less(i, j int) bool { return b[i].Category < b[j].Category }
+func (b byCategory) Swap(i, j int)      { b[i], b[j] = b[j], b[i] }
 
-type byFrequency []Bucket
+type byFrequency []bucket
 
-func (a byFrequency) Len() int           { return len(a) }
-func (a byFrequency) Less(i, j int) bool { return a[i].Frequency < a[j].Frequency }
-func (a byFrequency) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
+func (b byFrequency) Len() int           { return len(b) }
+func (b byFrequency) Less(i, j int) bool { return b[i].Frequency < b[j].Frequency }
+func (b byFrequency) Swap(i, j int)      { b[i], b[j] = b[j], b[i] }

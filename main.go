@@ -13,7 +13,8 @@ import (
 	"github.com/mattn/go-runewidth"
 )
 
-var usage = `Usage: freq [options] [-]
+func main() {
+	var usage = `Usage: freq [options] [-]
 
 Options:
   -h, --help            Show this help message and exit.
@@ -26,7 +27,6 @@ Options:
   --buckets=<num>       Number of histogram buckets (default is 10).
 `
 
-func main() {
 	var (
 		histogram   = flag.BoolP("histogram", "", false, "")
 		summary     = flag.BoolP("summary", "", false, "")
@@ -58,13 +58,15 @@ func main() {
 		// Histograms requires numerical data, so we need to make sure every
 		// line is a number.
 		var samples []float64
+
 		for _, v := range vals {
-			f, err := strconv.ParseFloat(v, 64)
+			sample, err := strconv.ParseFloat(v, 64)
 			if err != nil {
 				fmt.Fprintln(os.Stderr, "found non-numerical input:", v)
 				os.Exit(1)
 			}
-			samples = append(samples, f)
+
+			samples = append(samples, sample)
 		}
 
 		buckets, edges := bucketizeQuantities(samples, *buckets)
@@ -103,17 +105,18 @@ func printHistogram(out io.Writer, buckets [][]float64, edges []float64, barWidt
 
 	for idx, bucket := range buckets {
 		var (
-			normalizedWidth = float64(len(bucket)) / float64(maxFreq)
+			normalizedWidth = float64(len(bucket)) / maxFreq
 			width           = int(normalizedWidth * barWidth)
 			prefix          = paddedString(labels[idx], labelWidth, justify)
 		)
+
 		fmt.Fprintf(out, "%s %s %d\n", prefix, column(width), len(bucket))
 	}
 }
 
 // printBarChart displays a bar chart. The bar width determines the width of
 // the widest bar. Categories can optionally be right justified.
-func printBarChart(out io.Writer, buckets []Bucket, barWidth float64, justify bool) {
+func printBarChart(out io.Writer, buckets []bucket, barWidth float64, justify bool) {
 	var (
 		maxFreq       = maxInt(frequencies(buckets))
 		categoryWidth = maxStringWidth(categories(buckets))
@@ -125,6 +128,7 @@ func printBarChart(out io.Writer, buckets []Bucket, barWidth float64, justify bo
 			width           = int(normalizedWidth * barWidth)
 			prefix          = paddedString(bucket.Category, categoryWidth, justify)
 		)
+
 		fmt.Fprintf(out, "%s %s %d\n", prefix, column(width), bucket.Frequency)
 	}
 }
@@ -134,6 +138,7 @@ func paddedString(str string, width int, justify bool) string {
 	if justify {
 		return just(str, width)
 	}
+
 	return fill(str, width)
 }
 
@@ -149,9 +154,9 @@ func printSummary(out io.Writer, numbers []float64) {
 		fmt.Sprintf("%s=%.2f", "avg", avgFloat64(numbers)),
 	}
 
-	fmt.Fprintln(os.Stdout)
-	fmt.Fprintln(os.Stdout, "summary:")
-	fmt.Fprintln(os.Stdout, " "+strings.Join(stats, ", "))
+	fmt.Fprintln(out)
+	fmt.Fprintln(out, "summary:")
+	fmt.Fprintln(out, " "+strings.Join(stats, ", "))
 }
 
 // columns returns a horizontal bar of a given size.
@@ -159,6 +164,7 @@ func column(size int) string {
 	if size == 0 {
 		return "▏"
 	}
+
 	return strings.Repeat("█", size)
 }
 
@@ -166,11 +172,13 @@ func column(size int) string {
 // supports CJK through the go-runewidth package.
 func maxStringWidth(strs []string) int {
 	var max int
+
 	for _, str := range strs {
 		w := runewidth.StringWidth(str)
 		if w > max {
 			max = w
 		}
 	}
+
 	return max
 }

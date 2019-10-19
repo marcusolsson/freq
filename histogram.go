@@ -10,6 +10,7 @@ func bucketizeQuantities(values []float64, n int) ([][]float64, []float64) {
 	for i := 0; i < n; i++ {
 		edges = append(edges, min+float64(i)*bucketSize)
 	}
+
 	edges = append(edges, max)
 
 	buckets := make([][]float64, n)

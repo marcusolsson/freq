@@ -7,12 +7,14 @@ import (
 
 func maxFrequency(buckets [][]float64) float64 {
 	var max float64
+
 	for _, b := range buckets {
 		n := float64(len(b))
 		if n > max {
 			max = n
 		}
 	}
+
 	return max
 }
 
@@ -23,6 +25,7 @@ func maxInt(values []int) int {
 			max = v
 		}
 	}
+
 	return max
 }
 
@@ -31,6 +34,7 @@ func maxFloat64(values []float64) float64 {
 	for _, v := range values {
 		max = math.Max(max, v)
 	}
+
 	return max
 }
 
@@ -39,54 +43,50 @@ func minFloat64(values []float64) float64 {
 	for _, v := range values {
 		min = math.Min(min, v)
 	}
+
 	return min
 }
 
 func avgFloat64(fs []float64) float64 {
 	var sum float64
 	for _, f := range fs {
-		sum += float64(f)
+		sum += f
 	}
+
 	return sum / float64(len(fs))
 }
 
-func avgInt(fs []int) float64 {
-	var sum float64
-	for _, f := range fs {
-		sum += float64(f)
+func categories(buckets []bucket) []string {
+	keys := make([]string, len(buckets))
+	for i, b := range buckets {
+		keys[i] = b.Category
 	}
-	return sum / float64(len(fs))
-}
 
-func categories(buckets []Bucket) []string {
-	var keys []string
-	for _, b := range buckets {
-		keys = append(keys, b.Category)
-	}
 	return keys
 }
 
-func frequencies(buckets []Bucket) []int {
-	var values []int
-	for _, b := range buckets {
-		values = append(values, b.Frequency)
+func frequencies(buckets []bucket) []int {
+	values := make([]int, len(buckets))
+	for i, b := range buckets {
+		values[i] = b.Frequency
 	}
+
 	return values
 }
 
-func frequenciesFloat64(buckets []Bucket) []float64 {
-	var values []float64
-	for _, b := range buckets {
-		values = append(values, float64(b.Frequency))
+func frequenciesFloat64(buckets []bucket) []float64 {
+	values := make([]float64, len(buckets))
+	for i, b := range buckets {
+		values[i] = float64(b.Frequency)
 	}
+
 	return values
 }
 
 func percentile(p float64, values []float64) float64 {
 	samples := make([]float64, len(values))
-	for i, v := range values {
-		samples[i] = v
-	}
+	copy(samples, values)
+
 	sort.Float64s(samples)
 
 	val := p * float64(len(samples))

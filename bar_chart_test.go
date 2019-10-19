@@ -7,7 +7,7 @@ import (
 )
 
 func TestPrintBarChart(t *testing.T) {
-	h := []Bucket{
+	h := []bucket{
 		{Category: "foobar", Frequency: 3},
 		{Category: "世界", Frequency: 2},
 		{Category: "–", Frequency: 1},

@@ -17,12 +17,15 @@ func TestPercentile(t *testing.T) {
 	if got, want := percentile(0.50, buckets), 44.0; got != want {
 		t.Errorf("got = %v; want = %v", got, want)
 	}
+
 	if got, want := percentile(0.90, buckets), 61.0; got != want {
 		t.Errorf("got = %v; want = %v", got, want)
 	}
+
 	if got, want := percentile(0.95, buckets), 64.0; got != want {
 		t.Errorf("got = %v; want = %v", got, want)
 	}
+
 	if got, want := percentile(0.99, buckets), 73.0; got != want {
 		t.Errorf("got = %v; want = %v", got, want)
 	}

@@ -26,13 +26,11 @@ func TestPadding_Fill(t *testing.T) {
 			Out:   "世界  ",
 		},
 	} {
-		t.Run("", func(t *testing.T) {
-			got := fill(tt.In, tt.Width)
+		got := fill(tt.In, tt.Width)
 
-			if got != tt.Out {
-				t.Fatalf("got = %q; want = %q", got, tt.Out)
-			}
-		})
+		if got != tt.Out {
+			t.Errorf("got = %q; want = %q", got, tt.Out)
+		}
 	}
 }
 
@@ -58,12 +56,10 @@ func TestPadding_Justify(t *testing.T) {
 			Out:   "  世界",
 		},
 	} {
-		t.Run("", func(t *testing.T) {
-			got := just(tt.In, tt.Width)
+		got := just(tt.In, tt.Width)
 
-			if got != tt.Out {
-				t.Fatalf("got = %q; want = %q", got, tt.Out)
-			}
-		})
+		if got != tt.Out {
+			t.Errorf("got = %q; want = %q", got, tt.Out)
+		}
 	}
 }
