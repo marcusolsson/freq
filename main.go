@@ -69,7 +69,7 @@ Options:
 			samples = append(samples, sample)
 		}
 
-		buckets, edges := bucketizeQuantities(samples, *buckets)
+		buckets, edges := hist(samples, *buckets)
 
 		printHistogram(os.Stdout, buckets, edges, *columnWidth, *justify)
 
@@ -77,7 +77,7 @@ Options:
 			printSummary(os.Stdout, samples)
 		}
 	} else {
-		buckets := bucketizeCategories(vals)
+		buckets := categoricalBuckets(vals)
 
 		// In contrast to histograms, bar charts allow you to sort the bars.
 		sortBuckets(buckets, *sortBy, *desc)

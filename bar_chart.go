@@ -7,7 +7,7 @@ type bucket struct {
 	Frequency int
 }
 
-func bucketizeCategories(vals []string) []bucket {
+func categoricalBuckets(vals []string) []bucket {
 	buckets := make(map[string]int)
 
 	for _, v := range vals {

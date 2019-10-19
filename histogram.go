@@ -1,6 +1,6 @@
 package main
 
-func bucketizeQuantities(values []float64, n int) ([][]float64, []float64) {
+func hist(values []float64, n int) ([][]float64, []float64) {
 	max := maxFloat64(values)
 	min := minFloat64(values)
 
