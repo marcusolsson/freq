@@ -44,12 +44,16 @@ func sortBuckets(buckets []bucket, orderBy string, desc bool) {
 
 type byCategory []bucket
 
-func (b byCategory) Len() int           { return len(b) }
+func (b byCategory) Len() int { return len(b) }
+
 func (b byCategory) Less(i, j int) bool { return b[i].Category < b[j].Category }
-func (b byCategory) Swap(i, j int)      { b[i], b[j] = b[j], b[i] }
+
+func (b byCategory) Swap(i, j int) { b[i], b[j] = b[j], b[i] }
 
 type byFrequency []bucket
 
-func (b byFrequency) Len() int           { return len(b) }
+func (b byFrequency) Len() int { return len(b) }
+
 func (b byFrequency) Less(i, j int) bool { return b[i].Frequency < b[j].Frequency }
-func (b byFrequency) Swap(i, j int)      { b[i], b[j] = b[j], b[i] }
+
+func (b byFrequency) Swap(i, j int) { b[i], b[j] = b[j], b[i] }

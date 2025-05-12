@@ -3,7 +3,7 @@ package main
 import (
 	"strings"
 
-	"github.com/mattn/go-runewidth"
+	runewidth "github.com/mattn/go-runewidth"
 )
 
 func fill(s string, w int) string {

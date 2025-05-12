@@ -9,13 +9,12 @@ import (
 	"strconv"
 	"strings"
 
+	runewidth "github.com/mattn/go-runewidth"
 	flag "github.com/spf13/pflag"
-
-	"github.com/mattn/go-runewidth"
 )
 
 func main() {
-	var usage = `Usage: freq [options] [-]
+	usage := `Usage: freq [options] [-]
 
 Options:
   -h, --help            Show this help message and exit.
