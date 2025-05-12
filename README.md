@@ -30,7 +30,7 @@ $ cat dataset.txt | freq --histogram --justify
 ## Installation
 
 ```bash
-go get github.com/marcusolsson/freq
+go install github.com/marcusolsson/freq@latest
 ```
 
 ## Usage
