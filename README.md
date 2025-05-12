@@ -53,8 +53,8 @@ Show distribution of word lengths in a document:
 cat file.txt | tr -d '[:punct:]' | tr '[:upper:]' '[:lower:]' | tr '[:space:]' '\n' | xargs -I'%' -n1 sh -c "echo % | wc -m" | freq --histogram
 ```
 
-Show distribution of pull request age for a GitHub project, using [hub](https://hub.github.com/):
+Show distribution of pull request age for a GitHub project, using the GitHub CLI.
 
 ```
-hub pr list -s opened -f '%ct%n' | xargs -n1 -I'{}' sh -c 'echo $(($(date +%s)-{}))' | freq --histogram --buckets=20
+gh pr list -s opened -f '%ct%n' | xargs -n1 -I'{}' sh -c 'echo $(($(date +%s)-{}))' | freq --histogram --buckets=20
 ```
